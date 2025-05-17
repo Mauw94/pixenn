@@ -7,7 +7,9 @@ export abstract class Entity {
     public shouldBeRemoved: boolean = false;
     public isHit: boolean = false;
     public isDead: boolean = false;
-    public readonly id: Symbol;
+    public readonly id: Symbol; 
+    // TODO: we can 'hardcore' ids for certain important entities
+    // such as a player and keep a dict of these entities. This can be handle for later checking
 
     public xPos: number = 0;
     public yPos: number = 0;
