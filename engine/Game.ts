@@ -39,14 +39,6 @@ export class Game {
 
     protected update(delta: number): void {
         this.sceneManager.update(delta);
-
-        // NOTE: if player is setup we can center the camera on the player from above
-
-        // if (this.panCameraToPlayer) {
-        //     const { camera, player } = this.gameData;
-        //     camera.x = player.xPos + this.offset - camera.width / 2;
-        //     camera.y = player.yPos - camera.height / 2;
-        // }
     }
 
     protected render(): void {

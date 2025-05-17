@@ -11,17 +11,14 @@ export abstract class Scene {
         this.gameData = gameData;
     }
 
-    abstract setup(): void;
+    public abstract setup(): void;
     public abstract update(delta: number): void;
     public abstract render(): void;
     public abstract addEntity(entity: Entity): void;
-
-    // NOTE: Move this to the scene that implements
-    // public renderBackground(bg: HTMLImageElement): void {
-    //     const { camera } = this.gameData;
-    //     this.gameData.context.drawImage(bg, 0 - camera.x, 0 - camera.y, this.gameData.screenWidth * 2, this.gameData.screenHeight * 2);
-    // }
-
+    public abstract addEntities(entities: Entity[]): void;
+    public abstract removeEntity(entity: Entity): boolean;
+    public abstract removeEntities(entities: Entity[]): boolean;
+    
     // NOTE: this goes to a collision manager/scene that needs to check
     // public checkCollisionsWithEnemies(attack: Entity): void {
     //     this.enemies.forEach((enemy) => {

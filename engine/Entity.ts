@@ -1,13 +1,11 @@
-import { EntityType } from "./EntityType";
 import type { GameData } from "./GameData";
 
 export abstract class Entity {
-    public abstract EntityType: EntityType;
     public hasBeenSetup: boolean = false;
     public shouldBeRemoved: boolean = false;
     public isHit: boolean = false;
     public isDead: boolean = false;
-    public readonly id: Symbol; 
+    public readonly id: Symbol;
     // TODO: we can 'hardcore' ids for certain important entities
     // such as a player and keep a dict of these entities. This can be handle for later checking
 
@@ -30,12 +28,13 @@ export abstract class Entity {
         width: 0,
         height: 0,
     };
-
+    
+    // TODO: shouldn't be a hardcoded value.
     public FRAME_SIZE = 50;
-    private blinkTimeMs: number = 0;
-    private currBlinkTimeMs: number = 0;
-    private minBlinkOpacity: number = 0.5;
-    private hitTimeMs: number = 2000;
+    public blinkTimeMs: number = 0;
+    public currBlinkTimeMs: number = 0;
+    public minBlinkOpacity: number = 0.5;
+    public hitTimeMs: number = 2000;
 
     constructor() {
         this.id = Symbol();
@@ -48,34 +47,11 @@ export abstract class Entity {
 
     public runSetup(): void {
         this.setup();
-    }
-
-    public setup(): void {
         this.hasBeenSetup = true;
     }
 
-    // NOTE: this can also be moved to some implementation of an Entity
-    public update(gameData: GameData, delta: number): void {
-        if (!this.hasBeenSetup) return;
-
-        this.updateCollisionBox(gameData);
-
-        if (this.isHit && this.hitTimeMs >= 0) {
-            this.hitTimeMs -= delta * 1000;
-            this.doFlinch(delta);
-            if (this.hitTimeMs <= 0) {
-                this.isHit = false;
-                this.hitTimeMs = 2000;
-                this.currBlinkTimeMs = this.blinkTimeMs;
-            }
-        }
-    }
-
-    public isEnemy(): boolean { return this.EntityType === EntityType.ENEMY }
-    public isPlayer(): boolean { return this.EntityType === EntityType.PLAYER; }
-    public isPlayerAttack(): boolean { return this.EntityType === EntityType.PLAYER_ATTACK; }
-    public isEnemyAttack(): boolean { return this.EntityType === EntityType.ENEMY_ATTACK; }
-
+    public abstract setup(): void;
+    public abstract update(gameData: GameData, delta: number): void;
     public abstract render(gameData: GameData): void;
 
     public scaleUp(amount: number): void {
@@ -139,12 +115,12 @@ export abstract class Entity {
             this.collisionBox.width, this.collisionBox.height);
     }
 
-    public checkCollision(x: number, y: number): boolean {
+    public checkCollision(collider: Entity): boolean {
         return (
-            x >= this.collisionBox.x &&
-            x <= this.collisionBox.x + this.collisionBox.width &&
-            y >= this.collisionBox.y &&
-            y <= this.collisionBox.y + this.collisionBox.height
+            collider.collisionBox.x >= this.collisionBox.x &&
+            collider.collisionBox.x <= this.collisionBox.x + this.collisionBox.width &&
+            collider.collisionBox.y >= this.collisionBox.y &&
+            collider.collisionBox.y <= this.collisionBox.y + this.collisionBox.height
         );
     }
 

@@ -27,21 +27,6 @@ export class SceneManager {
         this.currentScene.addEntity(entity);
     }
 
-    // public addEntity(entity: Entity, entityType: EntityType): void {
-    //     switch (entityType) {
-    //         case EntityType.PLAYER:
-    //             this.currentScene.players.push(entity);
-    //             break;
-    //         case EntityType.PLAYER_ATTACK:
-    //             this.currentScene.playerAttacks.push(entity);
-    //             break;
-    //         case EntityType.ENEMY_ATTACK:
-    //         case EntityType.ENEMY:
-    //             this.currentScene.enemies.push(entity);
-    //             break;
-    //     }
-    // }
-
     public update(delta: number): void {
         this.currentScene.update(delta);
     }

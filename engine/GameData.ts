@@ -1,4 +1,5 @@
 import { Camera } from "./Camera";
+import { CollisionManager } from "./collisionManager";
 import InputListener from "./InputListener";
 import { SceneManager } from "./SceneManager";
 
@@ -7,6 +8,7 @@ export interface GameData {
     screenWidth: number;
     screenHeight: number;
     inputListener: InputListener;
+    collisionManager: CollisionManager;
     sceneManager: SceneManager;
     camera: Camera;
 }
